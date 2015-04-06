@@ -18,6 +18,7 @@
   "author": "Lin Dong",
   "license": "MIT",
   "dependencies": {
+    "commander": "^2.7.1",
     "fixmyjs": "^1.0.3",
     "ranma": "^0.4.4"
   }
