@@ -9,7 +9,7 @@ var path = require('path');
 var recursive = require('recursive-readdir');
 
 // utility packages
-var ranma = require('ranma');
+var ranma = require('zranma');
 var fixmyjs = require('fixmyjs');
 
 program
