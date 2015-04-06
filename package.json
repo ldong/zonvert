@@ -1,0 +1,24 @@
+{
+  "name": "zonvert",
+  "version": "0.0.1",
+  "description": "Convert AMD to CMD",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "www.github.com/ldong/zonvert"
+  },
+  "keywords": [
+    "amd",
+    "cmd",
+    "convert"
+  ],
+  "author": "Lin Dong",
+  "license": "MIT",
+  "dependencies": {
+    "fixmyjs": "^1.0.3",
+    "ranma": "^0.4.4"
+  }
+}
