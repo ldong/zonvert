@@ -23,5 +23,8 @@
     "fs-extra": "^0.18.0",
     "recursive-readdir": "^1.2.1",
     "zranma": "^0.4.4"
+  },
+  "bin": {
+    "zonvert": "./bin/zonvert"
   }
 }
