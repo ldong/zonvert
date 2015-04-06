@@ -59,21 +59,19 @@ var convertAMDtoCMD = function(directory, output){
           var dirname = path.dirname(filePath);
           var relative = path.relative(directory, dirname);
 
+          // create directory
+          var targetDirectoryPath = path.resolve(output, relative);
+          fs.mkdirp(targetDirectoryPath);
+
+          // copy file
+          var targetFilePath = path.resolve(targetDirectoryPath, basename);
+          fs.copySync(filePath, targetFilePath);
+
           if(path.extname(filePath) === '.js') {
-              // create directory
-              var targetDirectoryPath = path.resolve(output, relative);
-              fs.mkdirp(targetDirectoryPath);
-
-              // copy file
-              var targetFilePath = path.resolve(targetDirectoryPath, basename);
-              fs.copySync(filePath, targetFilePath);
-
-              // ensure it is a file
+              // ensure it is a js file
               if (fs.statSync(targetFilePath).isFile()) {
                   convertFileFromAMDtoCMD(targetFilePath);
                   fixFormatUsingFixmyjs(targetFilePath);
-              } else {
-                  console.log('It is directory');
               }
           }
       }
