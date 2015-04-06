@@ -35,7 +35,7 @@ var parse = function(config, directory, output){
             if(!jshintConfig){
                 throw new Error('Jshint config must be a valid json file');
             } else if(fs.existsSync(output) && fs.statSync(output).isDirectory()){
-                throw new Error("Output directory already exists, please use one empty folder");
+                // throw new Error("Output directory already exists, please use one empty folder");
                 convertAMDtoCMD(directory, output);
             } else {
                 fs.mkdirSync(output);
@@ -58,53 +58,53 @@ var convertAMDtoCMD = function(directory, output){
           var basename = path.basename(filePath);
           var dirname = path.dirname(filePath);
           var relative = path.relative(directory, dirname);
-          // console.log(directory);
-          // console.log(dirname);
-          // console.log(relative);
 
           if(path.extname(filePath) === '.js') {
               // create directory
               var targetDirectoryPath = path.resolve(output, relative);
               fs.mkdirp(targetDirectoryPath);
-              // console.log('Directory: ', targetDirectoryPath, ' created');
 
               // copy file
               var targetFilePath = path.resolve(targetDirectoryPath, basename);
               fs.copySync(filePath, targetFilePath);
-              // console.log('File: ', targetFilePath, 'created');
-
 
               // ensure it is a file
               if (fs.statSync(targetFilePath).isFile()) {
-                  // console.log('It is file');
-                  // console.log('TargetFilePath: ', targetFilePath);
                   convertFileFromAMDtoCMD(targetFilePath);
+                  fixFormatUsingFixmyjs(targetFilePath);
               } else {
                   console.log('It is directory');
               }
-
           }
       }
     });
 };
 
 var convertFileFromAMDtoCMD = function(filePath){
-    try{
+    try {
         var data = fs.readFileSync(filePath);
         var newData = ranma.cjsify(data.toString());
         fs.writeFileSync(filePath, newData.toString());
     } catch (e) {
         console.log('filepath: ', filePath);
-        console.log('Please fix it manually');
+        console.log('Please fix it manually, convertFileFromAMDtoCMD');
         console.log(e);
     }
 };
 
-var fixFormatUsingFixmyjs = function(){
-
-    var fixmyjs = require('fixmyjs');
-    var stringFixedCode = fixmyjs.fix(stringOfCode, objectOfOptions);
-}
+var fixFormatUsingFixmyjs = function(filePath){
+    try {
+        var stringOfCode = fs.readFileSync(filePath).toString();
+        var conf = fs.readFileSync(program.config);
+        var objectOfOptions = JSON.parse(conf);
+        var stringFixedCode = fixmyjs.fix(stringOfCode, objectOfOptions);
+        fs.writeFileSync(filePath, stringFixedCode);
+    } catch (e) {
+        console.log('filepath: ', filePath);
+        console.log('Please fix it manually, fixFormatUsingFixmyjs');
+        console.log(e);
+    }
+};
 
 
 if(!(program.config && program.directory && program.output)){
