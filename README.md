@@ -6,9 +6,9 @@ Date: April 06, 2015
 
 ## Instruction
 
-1. `npm install` to install all the dependenies of the project
+1. `npm install zonvert` to install `zonvert` package
 
-2. `node index.js -c ~/.jshintrc -d ./test/src -o ./test/build`
+2. `zonvert -c ~/.jshintrc -d ./test/src -o ./test/build`
 
 This will convert `AMD` to `CMD` javascript file.
 
